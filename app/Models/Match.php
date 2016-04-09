@@ -107,6 +107,28 @@ class Match extends Model
         $this->competition_name_short = $competition_name_short;
     }
 
+    public function getResult()
+    {
+        return $this->result;
+    }
+
+    public function setResult($result)
+    {
+        $this->result = $result;
+    }
+
+
+    public function getMatchStatus()
+    {
+        return $this->match_status;
+    }
+
+    public function setMatchStatus($match_status)
+    {
+        $this->match_status = $match_status;
+    }
+
+
     /**
      * @return HasMany
      */
@@ -121,17 +143,21 @@ class Match extends Model
      * @param string $visitor
      * @param string $competition_name
      * @param string $competition_name_short
+     * @param string $result
+     * @param string $match_status
      *
      * @return static
      */
-    public static function make($time, $home, $visitor, $competition_name, $competition_name_short)
+    public static function make($time, $home, $visitor, $competition_name, $competition_name_short, $result, $match_status)
     {
         return new static([
             'time'                   => $time,
             'home'                   => $home,
             'visitor'                => $visitor,
             'competition_name'       => $competition_name,
-            'competition_name_short' => $competition_name_short
+            'competition_name_short' => $competition_name_short,
+            'result'                 => $result,
+            'match_status'           => $match_status
         ]);
     }
 }

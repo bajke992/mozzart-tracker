@@ -19,6 +19,8 @@ class Matches extends Migration
             $table->string('visitor');
             $table->string('competition_name');
             $table->string('competition_name_short');
+            $table->string('result');
+            $table->string('match_status');
         });
     }
 
