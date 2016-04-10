@@ -22,8 +22,8 @@ class Odd extends Model
     static $ODD_NAMES = [
         1 => [
             1 => '1',
-            2 => '2',
-            3 => 'X'
+            2 => 'X',
+            3 => '2'
         ],
         2 => [
             1 => '1X',

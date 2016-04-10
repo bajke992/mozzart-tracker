@@ -26,9 +26,14 @@ class MatchHandler
 
             $odds = $this->getOdds($match, $categories);
 
+//            dd(array_slice($odds, 0, 6));
+
             /** @var Match $sample */
-            $sample = $matchRepo->matchOdds($odds);
+            $sample = $matchRepo->matchOdds(array_slice($odds, 0, 6));
+//            var_dump($odds);
+//            var_dump($sample); die();
             if ($sample !== null) {
+//                dd($sample);
                 $sample->incrementCount();
                 $matchRepo->save($sample);
                 $this->incrementWinOdds($odds, $sample);

@@ -1,17 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+    <table>
+        <thead>
+            <th>
+                Match count
+            </th>
+            @foreach($results[0]->odds as $odd)
+                <th>
+                    {{ $odd->name }}
+                </th>
+            @endforeach
+        </thead>
+        <tbody>
+            @foreach($results as $result)
+                <tr>
+                    <td>
+                        {{ $result->count }}
+                    </td>
+                    @foreach($result->odds as $odd)
+                        <td>
+                            {{ $odd->value }}
+                            | {{ $odd->win_count }}
+                        </td>
+                    @endforeach
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 
-                <div class="panel-body">
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection

@@ -11,10 +11,17 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/',['as' => 'live', 'uses' => 'HomeController@live']);
+Route::get('finished',['as' => 'home', 'uses' => 'HomeController@index']);
+Route::get('ready',['as' => 'ready', 'uses' => 'HomeController@ready']);
+
+Route::group(['prefix' => 'ajax'], function () {
+    Route::get('offer', ['as' => 'offer', 'uses' => 'HomeController@performRequest']);
+});
+

@@ -4,6 +4,7 @@ use App\Models\Match;
 use App\Models\Odd;
 use Illuminate\Contracts\Queue\EntityNotFoundException;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class EloquentMatchRepository implements MatchRepositoryInterface
 {
@@ -83,15 +84,30 @@ class EloquentMatchRepository implements MatchRepositoryInterface
      * @return Match
      */
     public function matchOdds($odds){
-        $query = $this->odd->query();
 
+        $matches = $this->getAll();
+        $result = null;
+        $oddsss = [];
 
-        foreach($odds as $odd){
-            $query->where('name', $odd['name']);
-            $query->where('value', $odd['value']);
+        foreach($odds as $odd) {
+            $oddsss[] = [
+                'name' => $odd['name'],
+                'category' => $odd['category'],
+                'value' => $odd['value']
+            ];
         }
 
-        return $query->first();
+        foreach($matches as $match){
+            $oddss = [];
+            foreach(array_slice($match->odds->toArray(), 0, 6) as $tmp_odd) {
+                $oddss[] = [
+                    'name' => $tmp_odd['name'],
+                    'category' => $tmp_odd['category'],
+                    'value' => $tmp_odd['value']
+                ];
+            }
+            if($oddsss === $oddss) return $match;
+        }
     }
 
 }
