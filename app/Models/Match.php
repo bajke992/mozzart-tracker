@@ -11,6 +11,8 @@ class Match extends Model
 
     protected $guarded = ['id'];
 
+    public $timestamps = false;
+
     /**
      * @return integer
      */
@@ -28,106 +30,25 @@ class Match extends Model
     }
 
     /**
-     * @return string
+     * @return integer
      */
-    public function getTime()
+    public function getCount()
     {
-        return $this->time;
+        return $this->count;
     }
 
     /**
-     * @param string $time
+     * @param integer $count
      */
-    public function setTime($time)
+    public function setCount($count)
     {
-        $this->time = $time;
+        $this->count = $count;
     }
 
-    /**
-     * @return string
-     */
-    public function getHome()
+    public function incrementCount()
     {
-        return $this->home;
+        $this->count++;
     }
-
-    /**
-     * @param string $home
-     */
-    public function setHome($home)
-    {
-        $this->home = $home;
-    }
-
-    /**
-     * @return string
-     */
-    public function getVisitor()
-    {
-        return $this->visitor;
-    }
-
-    /**
-     * @param string $visitor
-     */
-    public function setVisitor($visitor)
-    {
-        $this->visitor = $visitor;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCompetitionName()
-    {
-        return $this->competition_name;
-    }
-
-    /**
-     * @param string $competition_name
-     */
-    public function setCompetitionName($competition_name)
-    {
-        $this->competition_name = $competition_name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCompetitionNameShort()
-    {
-        return $this->competition_name_short;
-    }
-
-    /**
-     * @param string $competition_name_short
-     */
-    public function setCompetitionNameShort($competition_name_short)
-    {
-        $this->competition_name_short = $competition_name_short;
-    }
-
-    public function getResult()
-    {
-        return $this->result;
-    }
-
-    public function setResult($result)
-    {
-        $this->result = $result;
-    }
-
-
-    public function getMatchStatus()
-    {
-        return $this->match_status;
-    }
-
-    public function setMatchStatus($match_status)
-    {
-        $this->match_status = $match_status;
-    }
-
 
     /**
      * @return HasMany
@@ -138,26 +59,10 @@ class Match extends Model
     }
 
     /**
-     * @param string $time
-     * @param string $home
-     * @param string $visitor
-     * @param string $competition_name
-     * @param string $competition_name_short
-     * @param string $result
-     * @param string $match_status
-     *
      * @return static
      */
-    public static function make($time, $home, $visitor, $competition_name, $competition_name_short, $result, $match_status)
+    public static function make()
     {
-        return new static([
-            'time'                   => $time,
-            'home'                   => $home,
-            'visitor'                => $visitor,
-            'competition_name'       => $competition_name,
-            'competition_name_short' => $competition_name_short,
-            'result'                 => $result,
-            'match_status'           => $match_status
-        ]);
+        return new static();
     }
 }

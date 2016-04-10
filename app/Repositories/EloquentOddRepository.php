@@ -1,7 +1,7 @@
 <?php namespace App\Repositories;
 
 use App\Models\Match;
-use App\Odd;
+use App\Models\Odd;
 use Illuminate\Database\Eloquent\Collection;
 
 class EloquentOddRepository implements OddRepositoryInterface

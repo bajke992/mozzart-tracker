@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,20 +11,86 @@ class Odd extends Model
 
     protected $guarded = ['id'];
 
+    public $timestamps = false;
+
+    static $ODD_IDS = [
+        1 => [1,2,3],
+        2 => [1,2,3],
+        5 => [1,2,3,4,5,6,7,8,9]
+    ];
+
+    static $ODD_NAMES = [
+        1 => [
+            1 => '1',
+            2 => '2',
+            3 => 'X'
+        ],
+        2 => [
+            1 => '1X',
+            2 => '12',
+            3 => 'X2'
+        ],
+        5 => [
+            1 => '1-1',
+            2 => '1-X',
+            3 => '1-2',
+            4 => 'X-1',
+            5 => 'X-X',
+            6 => 'X-2',
+            7 => '2-1',
+            8 => '2-X',
+            9 => '2-2',
+        ]
+    ];
+
     /**
-     * @return string
+     * @param $odd
+     *
+     * @return bool
      */
-    public function getWinStatus()
+    public static function checkOdd($odd)
     {
-        return $this->win_status;
+        return array_key_exists($odd, self::$ODD_IDS);
     }
 
     /**
-     * @param string $win_status
+     * @param $odd
+     * @param $subgame
+     *
+     * @return bool
      */
-    public function setWinStatus($win_status)
+    public static function checkSubGame($odd, $subgame)
     {
-        $this->win_status = $win_status;
+        if(in_array($subgame, self::$ODD_IDS[$odd])){
+            return $odd."|".$subgame;
+        }
+        return false;
+    }
+
+    public static function getNameByCategory($categories, $sub)
+    {
+        return $categories[$sub]->name;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getWinCount()
+    {
+        return $this->win_count;
+    }
+
+    /**
+     * @param integer $win_count
+     */
+    public function setWinCount($win_count)
+    {
+        $this->win_count = $win_count;
+    }
+
+    public function incrementWinCount()
+    {
+        $this->win_count++;
     }
 
     /**
@@ -92,6 +158,22 @@ class Odd extends Model
     }
 
     /**
+     * @return integer
+     */
+    public function getMatchId()
+    {
+        return $this->match_id;
+    }
+
+    /**
+     * @param integer $match_id
+     */
+    public function setMatchId($match_id)
+    {
+        $this->match_id = $match_id;
+    }
+
+    /**
      * @return BelongsTo
      */
     public function match()
@@ -103,17 +185,15 @@ class Odd extends Model
      * @param string $name
      * @param string $category
      * @param string $value
-     * @param string $win_status
      *
      * @return static
      */
-    public static function make($name, $category, $value, $win_status)
+    public static function make($name, $category, $value)
     {
         return new static([
             'name'       => $name,
             'category'   => $category,
             'value'      => $value,
-            'win_status' => $win_status
         ]);
     }
 }

@@ -14,13 +14,7 @@ class Matches extends Migration
     {
         Schema::create('matches', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('time');
-            $table->string('home');
-            $table->string('visitor');
-            $table->string('competition_name');
-            $table->string('competition_name_short');
-            $table->string('result');
-            $table->string('match_status');
+            $table->integer('count')->default(1);
         });
     }
 

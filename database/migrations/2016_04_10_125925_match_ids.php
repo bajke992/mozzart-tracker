@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Odds extends Migration
+class MatchIds extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,8 @@ class Odds extends Migration
      */
     public function up()
     {
-        Schema::create('odds', function (Blueprint $table) {
+        Schema::create('match_ids', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('category');
-            $table->string('value')->nullable();
-            $table->string('win_count')->default(0);
             $table->integer('match_id');
         });
     }
@@ -29,6 +25,6 @@ class Odds extends Migration
      */
     public function down()
     {
-        Schema::drop('odds');
+        Schema::drop('match_ids');
     }
 }

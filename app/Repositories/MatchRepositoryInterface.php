@@ -12,6 +12,26 @@ interface MatchRepositoryInterface
      */
     public function getAll();
 
+    /**
+     * @param integer $match_id
+     *
+     * @return Collection|Match[]
+     */
+    public function findMatchByMatchId($match_id);
+
+    /**
+     * @param integer $match_id
+     *
+     * @return Match|bool
+     */
+    public function findMatchByMatchIdOrFail($match_id);
+
+    /**
+     * @param array $odds
+     *
+     * @return Match
+     */
+    public function matchOdds($odds);
 
     /**
      * @param Match $match
