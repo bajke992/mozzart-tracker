@@ -31,7 +31,6 @@
     },
     "scripts": {
         "compile": [
-            "bower install",
             "gulp"
         ],
         "post-root-package-install": [
