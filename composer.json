@@ -30,6 +30,10 @@
         ]
     },
     "scripts": {
+        "compile": [
+            "bower install",
+            "gulp"
+        ],
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""
         ],
