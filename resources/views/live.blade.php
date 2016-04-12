@@ -160,23 +160,23 @@
                         ).append(
                                 $('<td/>').text(item.odds[1].subgames[2].value)
                         ).append(
-                                $('<td/>').text((item.odds.length >= 5) ? item.odds[5].subgames[0].value : '')
+                                $('<td/>').text((item.odds.hasOwnProperty(4)) ? item.odds[4].subgames[0].value : '')
                         ).append(
-                                $('<td/>').text((item.odds.length >= 5) ? item.odds[5].subgames[1].value : '')
+                                $('<td/>').text((item.odds.hasOwnProperty(4)) ? item.odds[4].subgames[1].value : '')
                         ).append(
-                                $('<td/>').text((item.odds.length >= 5) ? item.odds[5].subgames[2].value : '')
+                                $('<td/>').text((item.odds.hasOwnProperty(4)) ? item.odds[4].subgames[2].value : '')
                         ).append(
-                                $('<td/>').text((item.odds.length >= 5) ? item.odds[5].subgames[3].value : '')
+                                $('<td/>').text((item.odds.hasOwnProperty(4)) ? item.odds[4].subgames[3].value : '')
                         ).append(
-                                $('<td/>').text((item.odds.length >= 5) ? item.odds[5].subgames[4].value : '')
+                                $('<td/>').text((item.odds.hasOwnProperty(4)) ? item.odds[4].subgames[4].value : '')
                         ).append(
-                                $('<td/>').text((item.odds.length >= 5) ? item.odds[5].subgames[5].value : '')
+                                $('<td/>').text((item.odds.hasOwnProperty(4)) ? item.odds[4].subgames[5].value : '')
                         ).append(
-                                $('<td/>').text((item.odds.length >= 5) ? item.odds[5].subgames[6].value : '')
+                                $('<td/>').text((item.odds.hasOwnProperty(4)) ? item.odds[4].subgames[6].value : '')
                         ).append(
-                                $('<td/>').text((item.odds.length >= 5) ? item.odds[5].subgames[7].value : '')
+                                $('<td/>').text((item.odds.hasOwnProperty(4)) ? item.odds[4].subgames[7].value : '')
                         ).append(
-                                $('<td/>').text((item.odds.length >= 5) ? item.odds[5].subgames[8].value : '')
+                                $('<td/>').text((item.odds.hasOwnProperty(4)) ? item.odds[4].subgames[8].value : '')
                         )
                 );
             });
