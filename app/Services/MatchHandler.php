@@ -82,7 +82,8 @@ class MatchHandler
      */
     private function incrementWinOdds($odds, Match $match)
     {
-        $tmp_odds = $match->odds;
+        $tmp_odds = $match->odds->slice(0, 6);
+        dd($tmp_odds);
         foreach ($tmp_odds as $k => $tmp_odd) {
             if ($odds[$k]['winStatus'] === "WIN") {
                 $tmp_odd->incrementWinCount();
