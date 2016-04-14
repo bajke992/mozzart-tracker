@@ -65,36 +65,36 @@ class HomeController extends Controller
             "pageNumber"            => 1
         ];
 
-//        $response = $http->request('POST', 'https://www.mozzartbet.com/MozzartWS/oddsLive/offer', [
-//            'headers' => [
-//                'Accept'       => 'application/json',
-//                'Content-Type' => 'application/json'
-//            ],
-//            'json'    => $settings
-//        ]);
-//
-//        $responseBody = json_decode($response->getBody());
+        $response = $http->request('POST', 'https://www.mozzartbet.com/MozzartWS/oddsLive/offer', [
+            'headers' => [
+                'Accept'       => 'application/json',
+                'Content-Type' => 'application/json'
+            ],
+            'json'    => $settings
+        ]);
 
-//        if(count($responseBody->matches) !== 0) {
-//
-//            $pages = $responseBody->paginationInfo->numberOfTotalPages;
-//
-//            $matchHandler->handle($responseBody->matches, $responseBody->gamesBySport->{1}, $this->matchRepo, $this->oddRepo, $this->matchIdRepo);
-//
-//            for ($i = $responseBody->paginationInfo->currentPage + 1; $i <= $pages; $i++) {
-//                $settings['pageNumber'] = $i;
-//                $res                    = $http->request('POST', 'https://www.mozzartbet.com/MozzartWS/oddsLive/offer', [
-//                    'headers' => [
-//                        'Accept'       => 'application/json',
-//                        'Content-Type' => 'application/json'
-//                    ],
-//                    'json'    => $settings
-//                ]);
-//
-//                $body = json_decode($res->getBody());
-//                $matchHandler->handle($body->matches, $body->gamesBySport->{1}, $this->matchRepo, $this->oddRepo, $this->matchIdRepo);
-//            }
-//        }
+        $responseBody = json_decode($response->getBody());
+
+        if(count($responseBody->matches) !== 0) {
+
+            $pages = $responseBody->paginationInfo->numberOfTotalPages;
+
+            $matchHandler->handle($responseBody->matches, $responseBody->gamesBySport->{1}, $this->matchRepo, $this->oddRepo, $this->matchIdRepo);
+
+            for ($i = $responseBody->paginationInfo->currentPage + 1; $i <= $pages; $i++) {
+                $settings['pageNumber'] = $i;
+                $res                    = $http->request('POST', 'https://www.mozzartbet.com/MozzartWS/oddsLive/offer', [
+                    'headers' => [
+                        'Accept'       => 'application/json',
+                        'Content-Type' => 'application/json'
+                    ],
+                    'json'    => $settings
+                ]);
+
+                $body = json_decode($res->getBody());
+                $matchHandler->handle($body->matches, $body->gamesBySport->{1}, $this->matchRepo, $this->oddRepo, $this->matchIdRepo);
+            }
+        }
 
         $results = $this->matchRepo->getAll();
 
