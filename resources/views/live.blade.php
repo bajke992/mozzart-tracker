@@ -58,9 +58,9 @@
                 url: '{{ URL::route('offer', ['','']) }}',
                 success: function (data) {
                     $results = null;
-                    $ls = null;
                     $results = (JSON.parse(data)).matches;
                     if ($results.length === 0) return;
+                    $ls = null;
                     if (window.localStorage.length > 0) window.localStorage.removeItem('data');
                     checkLS();
                     populateData();
