@@ -23,28 +23,14 @@
             return this;
         };
 
-        Object.prototype.clone = Array.prototype.clone = function()
-        {
-            if (Object.prototype.toString.call(this) === '[object Array]')
-            {
-                var clone = [];
-                for (var i=0; i<this.length; i++)
-                    clone[i] = this[i].clone();
-
-                return clone;
+        Array.prototype.clone = function () {
+            var b = new Array(this.length);
+            var i = this.length;
+            while (i--) {
+                b[i] = this[i];
             }
-            else if (typeof(this)=="object")
-            {
-                var clone = {};
-                for (var prop in this)
-                    if (this.hasOwnProperty(prop))
-                        clone[prop] = this[prop].clone();
-
-                return clone;
-            }
-            else
-                return this;
-        }
+            return b;
+        };
 
         Array.prototype.uniqueObjects = function () {
             var newArr = [];
@@ -477,89 +463,104 @@
             ]
         };
 
-        function collectData(){
+        function collectData() {
             $matchId = $('#matchId').data('id');
             var $a = $.extend(true, {}, sendData);
 
             $a.matchId = $matchId;
 
-            $('input[type=checkbox]').each(function(){
+            $('input[type=checkbox]').each(function () {
                 $item = $(this);
 
-                switch($item.attr('id')){
-                    case '1': {
+                switch ($item.attr('id')) {
+                    case '1':
+                    {
                         $a.odds[0].subgames[0].value = $item.attr('name');
-                        if($item.is(':checked')) $a.odds[0].subgames[0].winStatus = "WIN";
+                        if ($item.is(':checked')) $a.odds[0].subgames[0].winStatus = "WIN";
                         break;
                     }
-                    case 'X': {
+                    case 'X':
+                    {
                         $a.odds[0].subgames[1].value = $item.attr('name');
-                        if($item.is(':checked')) $a.odds[0].subgames[1].winStatus = "WIN";
+                        if ($item.is(':checked')) $a.odds[0].subgames[1].winStatus = "WIN";
                         break;
                     }
-                    case '2': {
+                    case '2':
+                    {
                         $a.odds[0].subgames[2].value = $item.attr('name');
-                        if($item.is(':checked')) $a.odds[0].subgames[2].winStatus = "WIN";
+                        if ($item.is(':checked')) $a.odds[0].subgames[2].winStatus = "WIN";
                         break;
                     }
-                    case '1X': {
+                    case '1X':
+                    {
                         $a.odds[1].subgames[0].value = $item.attr('name');
-                        if($item.is(':checked')) $a.odds[1].subgames[0].winStatus = "WIN";
+                        if ($item.is(':checked')) $a.odds[1].subgames[0].winStatus = "WIN";
                         break;
                     }
-                    case '12': {
+                    case '12':
+                    {
                         $a.odds[1].subgames[1].value = $item.attr('name');
-                        if($item.is(':checked')) $a.odds[1].subgames[1].winStatus = "WIN";
+                        if ($item.is(':checked')) $a.odds[1].subgames[1].winStatus = "WIN";
                         break;
                     }
-                    case 'X2': {
+                    case 'X2':
+                    {
                         $a.odds[1].subgames[2].value = $item.attr('name');
-                        if($item.is(':checked')) $a.odds[1].subgames[2].winStatus = "WIN";
+                        if ($item.is(':checked')) $a.odds[1].subgames[2].winStatus = "WIN";
                         break;
                     }
-                    case '1-1': {
+                    case '1-1':
+                    {
                         $a.odds[4].subgames[0].value = $item.attr('name');
-                        if($item.is(':checked')) $a.odds[4].subgames[0].winStatus = "WIN";
+                        if ($item.is(':checked')) $a.odds[4].subgames[0].winStatus = "WIN";
                         break;
                     }
-                    case '1-X': {
+                    case '1-X':
+                    {
                         $a.odds[4].subgames[1].value = $item.attr('name');
-                        if($item.is(':checked')) $a.odds[4].subgames[1].winStatus = "WIN";
+                        if ($item.is(':checked')) $a.odds[4].subgames[1].winStatus = "WIN";
                         break;
                     }
-                    case '1-2': {
+                    case '1-2':
+                    {
                         $a.odds[4].subgames[2].value = $item.attr('name');
-                        if($item.is(':checked')) $a.odds[4].subgames[2].winStatus = "WIN";
+                        if ($item.is(':checked')) $a.odds[4].subgames[2].winStatus = "WIN";
                         break;
                     }
-                    case 'X-1': {
+                    case 'X-1':
+                    {
                         $a.odds[4].subgames[3].value = $item.attr('name');
-                        if($item.is(':checked')) $a.odds[4].subgames[3].winStatus = "WIN";
+                        if ($item.is(':checked')) $a.odds[4].subgames[3].winStatus = "WIN";
                         break;
                     }
-                    case 'X-X': {
+                    case 'X-X':
+                    {
                         $a.odds[4].subgames[4].value = $item.attr('name');
-                        if($item.is(':checked')) $a.odds[4].subgames[4].winStatus = "WIN";
+                        if ($item.is(':checked')) $a.odds[4].subgames[4].winStatus = "WIN";
                         break;
                     }
-                    case 'X-2': {
+                    case 'X-2':
+                    {
                         $a.odds[4].subgames[5].value = $item.attr('name');
-                        if($item.is(':checked')) $a.odds[4].subgames[5].winStatus = "WIN";
+                        if ($item.is(':checked')) $a.odds[4].subgames[5].winStatus = "WIN";
                         break;
                     }
-                    case '2-1': {
+                    case '2-1':
+                    {
                         $a.odds[4].subgames[6].value = $item.attr('name');
-                        if($item.is(':checked')) $a.odds[4].subgames[6].winStatus = "WIN";
+                        if ($item.is(':checked')) $a.odds[4].subgames[6].winStatus = "WIN";
                         break;
                     }
-                    case '2-X': {
+                    case '2-X':
+                    {
                         $a.odds[4].subgames[7].value = $item.attr('name');
-                        if($item.is(':checked')) $a.odds[4].subgames[7].winStatus = "WIN";
+                        if ($item.is(':checked')) $a.odds[4].subgames[7].winStatus = "WIN";
                         break;
                     }
-                    case '2-2': {
+                    case '2-2':
+                    {
                         $a.odds[4].subgames[8].value = $item.attr('name');
-                        if($item.is(':checked')) $a.odds[4].subgames[8].winStatus = "WIN";
+                        if ($item.is(':checked')) $a.odds[4].subgames[8].winStatus = "WIN";
                         break;
                     }
                 }
