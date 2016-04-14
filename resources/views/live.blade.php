@@ -64,7 +64,7 @@
                     if (window.localStorage.length > 0) window.localStorage.removeItem('data');
                     checkLS();
                     populateData();
-//                    collectFinishedData();
+                    collectFinishedData();
                 }
             });
         }
