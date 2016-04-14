@@ -21,7 +21,7 @@
                     @foreach($result->odds as $odd)
                         <td>
                             {{ $odd->value }}
-                            | {{ $odd->win_count }}
+                            | @if($odd->win_count > 0)<b style="color: red;">@endif{{ $odd->win_count }}@if($odd->win_count > 0)</b>@endif
                         </td>
                     @endforeach
                 </tr>
