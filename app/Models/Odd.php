@@ -57,7 +57,10 @@ class Odd extends Model
     {
         $x12 = $odd[0];
         $x112x2 = $odd[1];
-        $htft = $odd[4];
+        $htft = null;
+        if(count($odd) >= 4) {
+            $htft = $odd[4];
+        }
 
         $result = [];
 
@@ -69,8 +72,10 @@ class Odd extends Model
             if(property_exists($i, 'winStatus') && $i->winStatus === "WIN") $result[] = $i;
         }
 
-        foreach($htft->subgames as $i){
-            if(property_exists($i, 'winStatus') && $i->winStatus === "WIN") $result[] = $i;
+        if($htft !== null) {
+            foreach ($htft->subgames as $i) {
+                if (property_exists($i, 'winStatus') && $i->winStatus === "WIN") $result[] = $i;
+            }
         }
 
         return (count($result) >= 4) ? true : false;
