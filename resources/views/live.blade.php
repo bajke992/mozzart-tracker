@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <button onclick="send();">Click Me!</button>
+    <button onclick="send();">Live</button>
+    <button onclick="collectFinishedData();">Finished</button>
+
+    <button style="float: right;" onclick="sendFinished();">Send</button>
     <table border="1">
 
     </table>
@@ -20,18 +23,34 @@
             return this;
         };
 
-        Array.prototype.clone = function () {
-            var b = new Array(this.length);
-            var i = this.length;
-            while(i--) { b[i] = this[i]; }
-            return b;
-        };
+        Object.prototype.clone = Array.prototype.clone = function()
+        {
+            if (Object.prototype.toString.call(this) === '[object Array]')
+            {
+                var clone = [];
+                for (var i=0; i<this.length; i++)
+                    clone[i] = this[i].clone();
+
+                return clone;
+            }
+            else if (typeof(this)=="object")
+            {
+                var clone = {};
+                for (var prop in this)
+                    if (this.hasOwnProperty(prop))
+                        clone[prop] = this[prop].clone();
+
+                return clone;
+            }
+            else
+                return this;
+        }
 
         Array.prototype.uniqueObjects = function () {
             var newArr = [];
             var unique = {};
             this.forEach(function (item) {
-                if(!unique[item.matchId]){
+                if (!unique[item.matchId]) {
                     newArr.push(item);
                     unique[item.matchId] = item;
                 }
@@ -55,17 +74,17 @@
                     $results = null;
                     $ls = null;
                     $results = (JSON.parse(data)).matches;
-                    if($results.length === 0) return;
-                    if(window.localStorage.length > 0) window.localStorage.removeItem('data');
+                    if ($results.length === 0) return;
+                    if (window.localStorage.length > 0) window.localStorage.removeItem('data');
                     checkLS();
                     populateData();
-                    collectFinishedData();
+//                    collectFinishedData();
                 }
             });
         }
 
-        function checkLS(){
-            if(window.localStorage.length === 0){
+        function checkLS() {
+            if (window.localStorage.length === 0) {
                 window.localStorage.setItem('data', JSON.stringify($results));
             }
             $ls = JSON.parse(window.localStorage.getItem('data'));
@@ -77,8 +96,8 @@
             window.localStorage.setItem('data', JSON.stringify($newLS));
         }
 
-        function populateData(){
-            if(window.localStorage.length === 0) send();
+        function populateData() {
+            if (window.localStorage.length === 0) send();
             $ls = JSON.parse(window.localStorage.getItem('data'));
             $table = $('table');
             $table.children().remove().delay(2000);
@@ -126,6 +145,155 @@
                             $('<th/>').text('2-X')
                     ).append(
                             $('<th/>').text('2-2')
+                    )
+            ).prepend(
+                    $('<tr/>').append(
+                            $('<td/>').text('')
+                    ).append(
+                            $('<td/>').text('')
+                    ).append(
+                            $('<td/>').text('')
+                    ).append(
+                            $('<td/>').text('')
+                    ).append(
+                            $('<td/>').text('')
+                    ).append(
+                            $('<td/>').attr({'data-id': $ls[0].matchId, id: 'matchId'}).text($ls[0].matchId)
+                    ).append(
+                            $('<td/>').append(
+                                    $('<input/>').attr({
+                                        name: $ls[0].odds[0].subgames[0].value,
+                                        id: '1',
+                                        type: 'checkbox',
+                                        value: 'WIN'
+                                    })
+                            )
+                    ).append(
+                            $('<td/>').append(
+                                    $('<input/>').attr({
+                                        name: $ls[0].odds[0].subgames[1].value,
+                                        id: 'X',
+                                        type: 'checkbox',
+                                        value: 'WIN'
+                                    })
+                            )
+                    ).append(
+                            $('<td/>').append(
+                                    $('<input/>').attr({
+                                        name: $ls[0].odds[0].subgames[2].value,
+                                        id: '2',
+                                        type: 'checkbox',
+                                        value: 'WIN'
+                                    })
+                            )
+                    ).append(
+                            $('<td/>').append(
+                                    $('<input/>').attr({
+                                        name: $ls[0].odds[1].subgames[0].value,
+                                        id: '1X',
+                                        type: 'checkbox',
+                                        value: 'WIN'
+                                    })
+                            )
+                    ).append(
+                            $('<td/>').append(
+                                    $('<input/>').attr({
+                                        name: $ls[0].odds[1].subgames[1].value,
+                                        id: '12',
+                                        type: 'checkbox',
+                                        value: 'WIN'
+                                    })
+                            )
+                    ).append(
+                            $('<td/>').append(
+                                    $('<input/>').attr({
+                                        name: $ls[0].odds[1].subgames[2].value,
+                                        id: 'X2',
+                                        type: 'checkbox',
+                                        value: 'WIN'
+                                    })
+                            )
+                    ).append(
+                            $('<td/>').append(
+                                    $('<input/>').attr({
+                                        name: $ls[0].odds[4].subgames[0].value,
+                                        id: '1-1',
+                                        type: 'checkbox',
+                                        value: 'WIN'
+                                    })
+                            )
+                    ).append(
+                            $('<td/>').append(
+                                    $('<input/>').attr({
+                                        name: $ls[0].odds[4].subgames[1].value,
+                                        id: '1-X',
+                                        type: 'checkbox',
+                                        value: 'WIN'
+                                    })
+                            )
+                    ).append(
+                            $('<td/>').append(
+                                    $('<input/>').attr({
+                                        name: $ls[0].odds[4].subgames[2].value,
+                                        id: '1-2',
+                                        type: 'checkbox',
+                                        value: 'WIN'
+                                    })
+                            )
+                    ).append(
+                            $('<td/>').append(
+                                    $('<input/>').attr({
+                                        name: $ls[0].odds[4].subgames[3].value,
+                                        id: 'X-1',
+                                        type: 'checkbox',
+                                        value: 'WIN'
+                                    })
+                            )
+                    ).append(
+                            $('<td/>').append(
+                                    $('<input/>').attr({
+                                        name: $ls[0].odds[4].subgames[4].value,
+                                        id: 'X-X',
+                                        type: 'checkbox',
+                                        value: 'WIN'
+                                    })
+                            )
+                    ).append(
+                            $('<td/>').append(
+                                    $('<input/>').attr({
+                                        name: $ls[0].odds[4].subgames[5].value,
+                                        id: 'X-2',
+                                        type: 'checkbox',
+                                        value: 'WIN'
+                                    })
+                            )
+                    ).append(
+                            $('<td/>').append(
+                                    $('<input/>').attr({
+                                        name: $ls[0].odds[4].subgames[6].value,
+                                        id: '2-1',
+                                        type: 'checkbox',
+                                        value: 'WIN'
+                                    })
+                            )
+                    ).append(
+                            $('<td/>').append(
+                                    $('<input/>').attr({
+                                        name: $ls[0].odds[4].subgames[7].value,
+                                        id: '2-X',
+                                        type: 'checkbox',
+                                        value: 'WIN'
+                                    })
+                            )
+                    ).append(
+                            $('<td/>').append(
+                                    $('<input/>').attr({
+                                        name: $ls[0].odds[4].subgames[8].value,
+                                        id: '2-2',
+                                        type: 'checkbox',
+                                        value: 'WIN'
+                                    })
+                            )
                     )
             );
 
@@ -182,13 +350,239 @@
             });
         }
 
-        function collectFinishedData(){
+        function collectFinishedData() {
             $.ajax({
                 url: '{{ URL::route('home') }}',
-                success: function (){
+                success: function () {
                     console.log('successFinishedData');
                 }
             })
+        }
+
+        var sendData = {
+            matchId: 1,
+            odds: [
+                {
+                    id: 1,
+                    subgames: [
+                        {
+                            id: 1,
+                            bettingGameId: 1,
+                            value: "1,35",
+                            winStatus: "LOSE"
+                        },
+                        {
+                            id: 2,
+                            bettingGameId: 1,
+                            value: "4,40",
+                            winStatus: "LOSE"
+                        },
+                        {
+                            id: 3,
+                            bettingGameId: 1,
+                            value: "9,00",
+                            winStatus: "LOSE"
+                        }]
+                },
+                {
+                    id: 2,
+                    subgames: [
+                        {
+                            id: 1,
+                            bettingGameId: 2,
+                            value: "1,03",
+                            winStatus: "LOSE"
+                        },
+                        {
+                            id: 2,
+                            bettingGameId: 2,
+                            value: "1,17",
+                            winStatus: "LOSE"
+                        },
+                        {
+                            id: 3,
+                            bettingGameId: 2,
+                            value: "2,95",
+                            winStatus: "LOSE"
+                        }
+                    ]
+                },
+                {
+                    id: 3,
+                    subgames: []
+                },
+                {
+                    id: 4,
+                    subgames: []
+                },
+                {
+                    id: 5,
+                    subgames: [
+                        {
+                            id: 1,
+                            bettingGameId: 5,
+                            value: "1,95",
+                            winStatus: "LOSE"
+                        },
+                        {
+                            id: 2,
+                            bettingGameId: 5,
+                            value: "23,0",
+                            winStatus: "LOSE"
+                        },
+                        {
+                            id: 3,
+                            bettingGameId: 5,
+                            value: "70,0",
+                            winStatus: "LOSE"
+                        },
+                        {
+                            id: 4,
+                            bettingGameId: 5,
+                            value: "3,90",
+                            winStatus: "LOSE"
+                        },
+                        {
+                            id: 5,
+                            bettingGameId: 5,
+                            value: "6,50",
+                            winStatus: "LOSE"
+                        },
+                        {
+                            id: 6,
+                            bettingGameId: 5,
+                            value: "18,0",
+                            winStatus: "LOSE"
+                        },
+                        {
+                            id: 7,
+                            bettingGameId: 5,
+                            value: "28,0",
+                            winStatus: "LOSE"
+                        },
+                        {
+                            id: 8,
+                            bettingGameId: 5,
+                            value: "23,0",
+                            winStatus: "LOSE"
+                        },
+                        {
+                            id: 9,
+                            bettingGameId: 5,
+                            value: "17,0",
+                            winStatus: "LOSE"
+                        }
+                    ]
+                }
+            ]
+        };
+
+        function collectData(){
+            $matchId = $('#matchId').data('id');
+            var $a = $.extend(true, {}, sendData);
+
+            $a.matchId = $matchId;
+
+            $('input[type=checkbox]').each(function(){
+                $item = $(this);
+
+                switch($item.attr('id')){
+                    case '1': {
+                        $a.odds[0].subgames[0].value = $item.attr('name');
+                        if($item.is(':checked')) $a.odds[0].subgames[0].winStatus = "WIN";
+                        break;
+                    }
+                    case 'X': {
+                        $a.odds[0].subgames[1].value = $item.attr('name');
+                        if($item.is(':checked')) $a.odds[0].subgames[1].winStatus = "WIN";
+                        break;
+                    }
+                    case '2': {
+                        $a.odds[0].subgames[2].value = $item.attr('name');
+                        if($item.is(':checked')) $a.odds[0].subgames[2].winStatus = "WIN";
+                        break;
+                    }
+                    case '1X': {
+                        $a.odds[1].subgames[0].value = $item.attr('name');
+                        if($item.is(':checked')) $a.odds[1].subgames[0].winStatus = "WIN";
+                        break;
+                    }
+                    case '12': {
+                        $a.odds[1].subgames[1].value = $item.attr('name');
+                        if($item.is(':checked')) $a.odds[1].subgames[1].winStatus = "WIN";
+                        break;
+                    }
+                    case 'X2': {
+                        $a.odds[1].subgames[2].value = $item.attr('name');
+                        if($item.is(':checked')) $a.odds[1].subgames[2].winStatus = "WIN";
+                        break;
+                    }
+                    case '1-1': {
+                        $a.odds[4].subgames[0].value = $item.attr('name');
+                        if($item.is(':checked')) $a.odds[4].subgames[0].winStatus = "WIN";
+                        break;
+                    }
+                    case '1-X': {
+                        $a.odds[4].subgames[1].value = $item.attr('name');
+                        if($item.is(':checked')) $a.odds[4].subgames[1].winStatus = "WIN";
+                        break;
+                    }
+                    case '1-2': {
+                        $a.odds[4].subgames[2].value = $item.attr('name');
+                        if($item.is(':checked')) $a.odds[4].subgames[2].winStatus = "WIN";
+                        break;
+                    }
+                    case 'X-1': {
+                        $a.odds[4].subgames[3].value = $item.attr('name');
+                        if($item.is(':checked')) $a.odds[4].subgames[3].winStatus = "WIN";
+                        break;
+                    }
+                    case 'X-X': {
+                        $a.odds[4].subgames[4].value = $item.attr('name');
+                        if($item.is(':checked')) $a.odds[4].subgames[4].winStatus = "WIN";
+                        break;
+                    }
+                    case 'X-2': {
+                        $a.odds[4].subgames[5].value = $item.attr('name');
+                        if($item.is(':checked')) $a.odds[4].subgames[5].winStatus = "WIN";
+                        break;
+                    }
+                    case '2-1': {
+                        $a.odds[4].subgames[6].value = $item.attr('name');
+                        if($item.is(':checked')) $a.odds[4].subgames[6].winStatus = "WIN";
+                        break;
+                    }
+                    case '2-X': {
+                        $a.odds[4].subgames[7].value = $item.attr('name');
+                        if($item.is(':checked')) $a.odds[4].subgames[7].winStatus = "WIN";
+                        break;
+                    }
+                    case '2-2': {
+                        $a.odds[4].subgames[8].value = $item.attr('name');
+                        if($item.is(':checked')) $a.odds[4].subgames[8].winStatus = "WIN";
+                        break;
+                    }
+                }
+            });
+
+            return $a;
+        }
+
+        function sendFinished() {
+            var $a = collectData();
+
+            xhr = new XMLHttpRequest();
+            fd = new FormData();
+
+            fd.append('data', JSON.stringify($a));
+            fd.append('_token', '{{ csrf_token() }}');
+
+            xhr.open('POST', '{{ URL::route('finished') }}');
+            xhr.send(fd);
+
+            $ls.shift();
+            window.localStorage.setItem('data', JSON.stringify($ls));
+            populateData();
         }
 
 

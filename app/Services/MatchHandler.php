@@ -20,7 +20,7 @@ class MatchHandler
     public function handle(array $matches, array $categories, MatchRepositoryInterface $matchRepo, OddRepositoryInterface $oddRepo, MatchIdRepositoryInterface $matchIdRepo)
     {
         foreach ($matches as $match) {
-            if ($matchIdRepo->findByMatchId($match->matchId)) {
+            if ($matchIdRepo->findByMatchId($match->matchId) || !Odd::hasAllOdds($match->odds)) {
                 continue;
             }
 
@@ -82,10 +82,12 @@ class MatchHandler
      */
     private function incrementWinOdds($odds, Match $match)
     {
-        $tmp_odds = $match->odds->slice(0, 6);
+//        $tmp_odds = $match->odds->slice(0, 6);
+        $tmp_odds = $match->odds;
 
         foreach ($tmp_odds as $k => $tmp_odd) {
             if ($odds[$k]['winStatus'] === "WIN") {
+                var_dump($odds[$k]);
                 $tmp_odd->incrementWinCount();
                 $tmp_odd->save();
             }

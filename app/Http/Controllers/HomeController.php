@@ -65,6 +65,69 @@ class HomeController extends Controller
             "pageNumber"            => 1
         ];
 
+//        $response = $http->request('POST', 'https://www.mozzartbet.com/MozzartWS/oddsLive/offer', [
+//            'headers' => [
+//                'Accept'       => 'application/json',
+//                'Content-Type' => 'application/json'
+//            ],
+//            'json'    => $settings
+//        ]);
+//
+//        $responseBody = json_decode($response->getBody());
+
+//        if(count($responseBody->matches) !== 0) {
+//
+//            $pages = $responseBody->paginationInfo->numberOfTotalPages;
+//
+//            $matchHandler->handle($responseBody->matches, $responseBody->gamesBySport->{1}, $this->matchRepo, $this->oddRepo, $this->matchIdRepo);
+//
+//            for ($i = $responseBody->paginationInfo->currentPage + 1; $i <= $pages; $i++) {
+//                $settings['pageNumber'] = $i;
+//                $res                    = $http->request('POST', 'https://www.mozzartbet.com/MozzartWS/oddsLive/offer', [
+//                    'headers' => [
+//                        'Accept'       => 'application/json',
+//                        'Content-Type' => 'application/json'
+//                    ],
+//                    'json'    => $settings
+//                ]);
+//
+//                $body = json_decode($res->getBody());
+//                $matchHandler->handle($body->matches, $body->gamesBySport->{1}, $this->matchRepo, $this->oddRepo, $this->matchIdRepo);
+//            }
+//        }
+
+        $results = $this->matchRepo->getAll();
+
+        return view('home', [
+            'results' => $results
+        ]);
+    }
+
+    public function postFinished(Request $request, MatchHandler $matchHandler)
+    {
+        $input = $request->only([
+            'data'
+        ]);
+
+        $http     = new Client();
+        $settings = [
+            'sports'                => [1],
+            'dateRange'             => [
+                'from' => strtotime(date('d-m-Y 00:00:00')).'000',
+                'to'   => null
+            ],
+            'matchStatus'           => [
+                'FT',
+            ],
+            "matchSorting"          => "BY_TIME",
+            "selectedCompetitions"  => [],
+            "selectedGames"         => null,
+            "languageId"            => 1,
+            "matchNumber"           => null,
+            "favouriteMatchNumbers" => [],
+            "pageNumber"            => 1
+        ];
+
         $response = $http->request('POST', 'https://www.mozzartbet.com/MozzartWS/oddsLive/offer', [
             'headers' => [
                 'Accept'       => 'application/json',
@@ -75,32 +138,9 @@ class HomeController extends Controller
 
         $responseBody = json_decode($response->getBody());
 
-        if(count($responseBody->matches) !== 0) {
+        $data[] = json_decode($input['data']);
 
-            $pages = $responseBody->paginationInfo->numberOfTotalPages;
-
-            $matchHandler->handle($responseBody->matches, $responseBody->gamesBySport->{1}, $this->matchRepo, $this->oddRepo, $this->matchIdRepo);
-
-            for ($i = $responseBody->paginationInfo->currentPage + 1; $i <= $pages; $i++) {
-                $settings['pageNumber'] = $i;
-                $res                    = $http->request('POST', 'https://www.mozzartbet.com/MozzartWS/oddsLive/offer', [
-                    'headers' => [
-                        'Accept'       => 'application/json',
-                        'Content-Type' => 'application/json'
-                    ],
-                    'json'    => $settings
-                ]);
-
-                $body = json_decode($res->getBody());
-                $matchHandler->handle($body->matches, $body->gamesBySport->{1}, $this->matchRepo, $this->oddRepo, $this->matchIdRepo);
-            }
-        }
-
-        $results = $this->matchRepo->getAll();
-
-        return view('home', [
-            'results' => $results
-        ]);
+        $matchHandler->handle($data, $responseBody->gamesBySport->{1}, $this->matchRepo, $this->oddRepo, $this->matchIdRepo);
     }
 
     public function performRequest(Request $request)

@@ -53,6 +53,30 @@ class Odd extends Model
         return array_key_exists($odd, self::$ODD_IDS);
     }
 
+    public static function hasAllOdds($odd)
+    {
+        $x12 = $odd[0];
+        $x112x2 = $odd[1];
+        $htft = $odd[4];
+
+        $result = [];
+
+        foreach($x12->subgames as $i){
+            if($i->winStatus === "WIN") $result[] = $i;
+        }
+
+        foreach($x112x2->subgames as $i){
+            if($i->winStatus === "WIN") $result[] = $i;
+        }
+
+        foreach($htft->subgames as $i){
+            if($i->winStatus === "WIN") $result[] = $i;
+        }
+
+        return (count($result) === 4) ? true : false;
+
+    }
+
     /**
      * @param $odd
      * @param $subgame

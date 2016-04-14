@@ -23,5 +23,6 @@ Route::get('ready',['as' => 'ready', 'uses' => 'HomeController@ready']);
 
 Route::group(['prefix' => 'ajax'], function () {
     Route::get('offer', ['as' => 'offer', 'uses' => 'HomeController@performRequest']);
+    Route::post('finished', ['as' => 'finished', 'uses' => 'HomeController@postFinished']);
 });
 
