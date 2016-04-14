@@ -62,18 +62,18 @@ class Odd extends Model
         $result = [];
 
         foreach($x12->subgames as $i){
-            if($i->winStatus === "WIN") $result[] = $i;
+            if(property_exists($i, 'winStatus') && $i->winStatus === "WIN") $result[] = $i;
         }
 
         foreach($x112x2->subgames as $i){
-            if($i->winStatus === "WIN") $result[] = $i;
+            if(property_exists($i, 'winStatus') && $i->winStatus === "WIN") $result[] = $i;
         }
 
         foreach($htft->subgames as $i){
-            if($i->winStatus === "WIN") $result[] = $i;
+            if(property_exists($i, 'winStatus') && $i->winStatus === "WIN") $result[] = $i;
         }
 
-        return (count($result) === 4) ? true : false;
+        return (count($result) >= 4) ? true : false;
 
     }
 
