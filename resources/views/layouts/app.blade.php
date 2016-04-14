@@ -20,6 +20,15 @@
             font-family: 'Lato';
         }
 
+        ul {
+            list-style: none;
+        }
+
+        li {
+            display: inline;
+            margin-right: 20px;
+        }
+
         .fa-btn {
             margin-right: 6px;
         }
@@ -35,7 +44,7 @@
 
     <ul>
         <li>
-            <a href="{{ URL::route('home') }}">Home</a>
+            <a href="{{ URL::route('home') }}">Finished</a>
         </li>
         <li>
             <a href="{{ URL::route('live') }}">Live</a>
