@@ -55,7 +55,7 @@
         var interval = true;
 
         function send() {
-            if(setInterval) {
+            if(interval) {
                 setInterval(send, 300000);
                 interval = false;
             }
