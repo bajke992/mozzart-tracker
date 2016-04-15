@@ -50,10 +50,10 @@
 
         $(document).ready(function () {
             populateData();
-            setInterval(send, 300000);
         });
 
         function send() {
+            setInterval(send, 300000);
             $.ajax({
                 url: '{{ URL::route('offer', ['','']) }}',
                 success: function (data) {
