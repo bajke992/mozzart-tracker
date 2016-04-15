@@ -117,7 +117,7 @@ class HomeController extends Controller
                 'to'   => null
             ],
             'matchStatus'           => [
-                'FT',
+                'READY',
             ],
             "matchSorting"          => "BY_TIME",
             "selectedCompetitions"  => [],
