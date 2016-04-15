@@ -87,7 +87,6 @@ class MatchHandler
 
         foreach ($tmp_odds as $k => $tmp_odd) {
             if ($odds[$k]['winStatus'] === "WIN") {
-                var_dump($odds[$k]);
                 $tmp_odd->incrementWinCount();
                 $tmp_odd->save();
             }
