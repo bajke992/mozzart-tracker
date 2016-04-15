@@ -52,8 +52,13 @@
             populateData();
         });
 
+        var interval = true;
+
         function send() {
-            setInterval(send, 300000);
+            if(setInterval) {
+                setInterval(send, 300000);
+                interval = false;
+            }
             $.ajax({
                 url: '{{ URL::route('offer', ['','']) }}',
                 success: function (data) {
