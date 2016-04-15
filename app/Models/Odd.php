@@ -58,7 +58,7 @@ class Odd extends Model
         $x12 = $odd[0];
         $x112x2 = $odd[1];
         $htft = null;
-        if(count($odd) >= 4) {
+        if(count($odd) >= 5) {
             $htft = $odd[4];
         }
 
