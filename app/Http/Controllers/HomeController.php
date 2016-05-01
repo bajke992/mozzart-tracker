@@ -98,7 +98,7 @@ class HomeController extends Controller
             "pageNumber" => $currentPage
         ];
 
-        $response = $http->request('POST', 'https://www.mozzartbet.com/MozzartWS/oddsLive/offer', [
+        /*$response = $http->request('POST', 'https://www.mozzartbet.com/MozzartWS/oddsLive/offer', [
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json'
@@ -135,6 +135,7 @@ class HomeController extends Controller
         }
 
         Session::put('lastDate', date('Y-m-d'));
+        */
 
         $results = $this->matchRepo->getAll();
 
