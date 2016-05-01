@@ -75,7 +75,7 @@
         }
 
         function checkLS() {
-            if (window.localStorage.hasOwnProperty('data')) {
+            if (!window.localStorage.hasOwnProperty('data')) {
                 window.localStorage.setItem('data', JSON.stringify($results));
             }
             $ls = JSON.parse(window.localStorage.getItem('data'));
@@ -88,7 +88,7 @@
         }
 
         function populateData() {
-            if (window.localStorage.hasOwnProperty('data')) send();
+            if (!window.localStorage.hasOwnProperty('data')) send();
             $ls = JSON.parse(window.localStorage.getItem('data'));
             $table = $('table');
             $table.children().remove().delay(2000);
