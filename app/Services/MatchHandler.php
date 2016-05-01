@@ -86,7 +86,7 @@ class MatchHandler
         $tmp_odds = $match->odds;
 
         foreach ($tmp_odds as $k => $tmp_odd) {
-            if ($odds[$k]['winStatus'] === "WIN") {
+            if (array_key_exists($k, $odds) && $odds[$k]['winStatus'] === "WIN") {
                 $tmp_odd->incrementWinCount();
                 $tmp_odd->save();
             }
